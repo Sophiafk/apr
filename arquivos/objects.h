@@ -28,44 +28,44 @@ enum notes {DO, RE, MI, FA, SOL, LA, SI};
 
 struct PLAYER
 {
-    int ID;
     int width;
     int height;
-    int lives;
-    bool colidiu;
     float pos_inicial_x;
     float pos_inicial_y;
     float x;
     float y;
     float dy;
-    float bound_x;
-    float bound_y;
     float move_speed;
     float jump_speed;
+
+    int seqJogador[NUM_BIRDS];
+    int lives;
+
+    float bx;
+    float by;
+    bool colidiu;
     bool is_on_solid_ground;
     bool may_jump;
-    int seqJogador[NUM_BIRDS];
 };
 
 struct BOXES
 {
-    int ID;
-    int note;
     int width;
     int height;
     float x;
     float y;
-    float bound_x;
-    float bound_y;
+    float bx;
+    float by;
 
+    int note;
 };
 
 struct BIRDS
 {
-    int ID;
-    int note;
     float x;
     float y;
     float raio;
-    float explosion;
+
+    int note;
+    bool live;
 };

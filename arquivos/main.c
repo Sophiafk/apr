@@ -9,11 +9,13 @@ void PlayerJump(struct PLAYER *player, int key);
 
 void DrawBoxes(struct BOXES boxes[]);
 void InitBoxes(struct BOXES boxes[]);
-bool Collision(struct PLAYER *player, struct BOXES boxes[]);
 
 void InitBirds(struct BIRDS birds[], int sequencia[]);
 void DrawBirds(struct BIRDS birds[]);
+
 void DrawPentagram();
+
+void CheckCollision(struct PLAYER *player, struct BOXES boxes[]);
 
 //VARIAVEIS GLOBAIS
 int timerColisao = 0;
@@ -32,7 +34,6 @@ int main(int argc, char **argv)
         key[i] = 0;
     int seqCerta[NUM_BIRDS];
     int acertos = 0;
-
 
     //VARIÁVEIS DE OBJETOS
     struct PLAYER jogador;
@@ -210,7 +211,7 @@ int main(int argc, char **argv)
                 PlayerJump(&jogador, key[KEY_UP]);
 
                 //////////////////////////////////////////////
-                    if(jogador.colidiu == true)
+                if(jogador.colidiu == true)
                 {
                     timerColisao++;
                     if(timerColisao > 60 )
@@ -220,21 +221,22 @@ int main(int argc, char **argv)
                     }
                 }
                 else
-                    Collision(&jogador, caixas);
+                {
+                    CheckCollision(&jogador, caixas);
+                }
 
                 while(jogador.lives > 0)
                 {
                     for(i=0; i < NUM_BIRDS; i++)
                     {
                         if(seqCerta[i] == jogador.seqJogador[i])
-                            {
-                                acertos++;
-                            }
-                        else if(jogador.seqJogador[i] != NENHUMA)
                         {
-                            jogador.lives--;
+                            acertos++;
                         }
-
+                    }
+                    if(jogador.seqJogador[i] != NENHUMA)
+                    {
+                        jogador.lives--;
                     }
                 }
 
