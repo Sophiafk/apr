@@ -15,16 +15,18 @@ void DrawBirds(struct BIRDS birds[]);
 
 void DrawPentagram();
 
-void CheckCollision(struct PLAYER *player, struct BOXES boxes[]);
+void CheckCollision(struct PLAYER *player, struct BOXES boxes[], int *j, int *timerColisao);
+void CheckSequencias(struct PLAYER *player, int seqCerta[], int *j, int *state);
 
 //VARIAVEIS GLOBAIS
 int timerColisao = 0;
+
 
 int main(int argc, char **argv)
 {
     //VARIAVEIS
     enum key_tag {KEY_UP, KEY_LEFT, KEY_RIGHT, KEY_LSHIFT, KEY_SPACE, KEY_ENTER, KEY_Y, KEY_N, KEY_ESC, teclasTotal};
-    enum state_tag {MENU, PLAYING, GAMEOVER} state = MENU;
+
     srand(time(NULL));
     int i;
     bool redraw = true;
@@ -33,7 +35,9 @@ int main(int argc, char **argv)
     for(i = 0; i < teclasTotal; i++)
         key[i] = 0;
     int seqCerta[NUM_BIRDS];
-    int acertos = 0;
+    int numColisoes = 0;
+    int state = MENU;
+
 
     //VARIÁVEIS DE OBJETOS
     struct PLAYER jogador;
@@ -80,8 +84,7 @@ int main(int argc, char **argv)
     al_init_font_addon();
     al_init_ttf_addon();
 
-    InitPlayer(&jogador);
-    InitBoxes(caixas);
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,9 +187,10 @@ int main(int argc, char **argv)
             switch(state)
             {
             case MENU:
-                jogador.x = jogador.pos_inicial_x;
-                jogador.y = jogador.pos_inicial_y;
+                InitPlayer(&jogador);
+                InitBoxes(caixas);
                 InitBirds(passaros, seqCerta);
+                numColisoes = 0;
 
                 if(key[KEY_SPACE])
                 {
@@ -201,52 +205,20 @@ int main(int argc, char **argv)
                     state = GAMEOVER;
                     key[KEY_ENTER] = 0;
                 }
-
                 if(key[KEY_RIGHT])
                     MovePlayerRight(&jogador);
-
                 if(key[KEY_LEFT])
                     MovePlayerLeft(&jogador);
-
                 PlayerJump(&jogador, key[KEY_UP]);
+                CheckCollision(&jogador, caixas, &numColisoes, &timerColisao);
+                CheckSequencias(&jogador, seqCerta, &numColisoes, &state);
 
-                //////////////////////////////////////////////
-                if(jogador.colidiu == true)
-                {
-                    timerColisao++;
-                    if(timerColisao > 60 )
-                    {
-                        jogador.colidiu = false;
-                        timerColisao = 0;
-                    }
-                }
-                else
-                {
-                    CheckCollision(&jogador, caixas);
-                }
-
-                while(jogador.lives > 0)
-                {
-                    for(i=0; i < NUM_BIRDS; i++)
-                    {
-                        if(seqCerta[i] == jogador.seqJogador[i])
-                        {
-                            acertos++;
-                        }
-                    }
-                    if(jogador.seqJogador[i] != NENHUMA)
-                    {
-                        jogador.lives--;
-                    }
-                }
-
+                /*/ IMPRIMIR A SEQUENCIA CERTA
                 for(i=0; i<NUM_BIRDS; i++)
                 {
-                    printf("%d\nseqCerta: %d - seqJogador: %d\nacertos: %d\n", i, seqCerta[i], jogador.seqJogador[i], acertos);
+                    printf("%d\nseqCerta: %d - seqJogador: %d\n", i, seqCerta[i], jogador.seqJogador[i]);
                 }
-
-                /////////////////////////////////////////////////
-
+                /*/
 
             case GAMEOVER:
                 if(key[KEY_SPACE])
@@ -255,6 +227,15 @@ int main(int argc, char **argv)
                     key[KEY_SPACE] = 0;
                 }
                 break;
+
+            case YOUWIN:
+                if(key[KEY_SPACE])
+                {
+                    state = MENU;
+                    key[KEY_SPACE] = 0;
+                }
+                break;
+
             }//fecha o switch
         }// fecha o TIMER
 
@@ -287,6 +268,9 @@ int main(int argc, char **argv)
 
             case PLAYING:
                 al_clear_to_color(color_bg);
+                al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);
+                al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);
+                al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu);
                 DrawPentagram();
                 al_draw_filled_rectangle(SCREEN_W/SCREEN_W , SCREEN_H/1.25, SCREEN_W, SCREEN_H, al_map_rgb(50,125,0));
                 DrawBirds(passaros);
@@ -298,6 +282,14 @@ int main(int argc, char **argv)
             case GAMEOVER:
                 al_clear_to_color(color_black);
                 al_draw_text(font_48, color_white, SCREEN_W/2, 150, ALLEGRO_ALIGN_CENTER, "GAME OVER");
+                al_draw_text(font_24, color_white, SCREEN_W/2, 300, ALLEGRO_ALIGN_CENTER, "> TRY AGAIN [PRESS SPACE]");
+                al_draw_text(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, "> QUIT [PRESS ESC]");
+                al_flip_display();
+                break;
+
+            case YOUWIN:
+                al_clear_to_color(color_green);
+                al_draw_text(font_48, color_white, SCREEN_W/2, 150, ALLEGRO_ALIGN_CENTER, "YOU WIN!");
                 al_draw_text(font_24, color_white, SCREEN_W/2, 300, ALLEGRO_ALIGN_CENTER, "> TRY AGAIN [PRESS SPACE]");
                 al_draw_text(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, "> QUIT [PRESS ESC]");
                 al_flip_display();

@@ -1,70 +1,65 @@
 #include "objects.h"
 
-void CheckCollision(struct PLAYER *player, struct BOXES boxes[])
+
+void CheckCollision(struct PLAYER *player, struct BOXES boxes[], int *j, int *timerColisao)
 {
-    int j=0;
-
-    while(j < NUM_BIRDS)
+    int i;
+    if(player->colidiu == true)
     {
-        if(!player->colidiu && player->y <= (boxes[DO].y + boxes[DO].height) && (((player->x >= boxes[DO].x) && (player->x <= (boxes[DO].x+boxes[DO].width))) || ((player->x+player->width) >= boxes[DO].x) && ((player->x+player->width) <= (boxes[DO].x+boxes[DO].width))))//collision acima do player
-        {
-            player->y = boxes[DO].y + boxes[DO].height;
-            player->seqJogador[j] = DO;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[RE].y + boxes[RE].height) &&(((player->x >= boxes[RE].x) && (player->x <= (boxes[RE].x+boxes[RE].width))) || ((player->x+player->width) >= boxes[RE].x) && ((player->x+player->width) <= (boxes[RE].x+boxes[RE].width))))//collision acima do player
-        {
-            player->y = boxes[RE].y + boxes[RE].height;
-            player->seqJogador[j] = RE;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[MI].y + boxes[MI].height) &&(((player->x >= boxes[MI].x) && (player->x <= (boxes[MI].x+boxes[MI].width))) || ((player->x+player->width) >= boxes[MI].x) && ((player->x+player->width) <= (boxes[MI].x+boxes[MI].width))))//collision acima do player
-        {
-            player->y = boxes[MI].y + boxes[MI].height;
-            player->seqJogador[j] = MI;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[FA].y + boxes[FA].height) &&(((player->x >= boxes[FA].x) && (player->x <= (boxes[FA].x+boxes[FA].width))) || ((player->x+player->width) >= boxes[FA].x) && ((player->x+player->width) <= (boxes[FA].x+boxes[FA].width))))//collision acima do player
-        {
-            player->y = boxes[FA].y + boxes[FA].height;
-            player->seqJogador[j] = FA;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[SOL].y + boxes[SOL].height) &&(((player->x >= boxes[SOL].x) && (player->x <= (boxes[SOL].x+boxes[SOL].width))) || ((player->x+player->width) >= boxes[SOL].x) && ((player->x+player->width) <= (boxes[SOL].x+boxes[SOL].width))))//collision acima  player
-        {
-            player->y = boxes[SOL].y + boxes[SOL].height;
-            player->seqJogador[j] = SOL;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[LA].y + boxes[LA].height) &&(((player->x >= boxes[LA].x) && (player->x <= (boxes[LA].x+boxes[LA].width))) || ((player->x+player->width) >= boxes[LA].x) && ((player->x+player->width) <= (boxes[LA].x+boxes[LA].width))))//collision acima  player
-        {
-            player->y = boxes[LA].y + boxes[LA].height;
-            player->seqJogador[j] = LA;
-            j++;
-            player->colidiu = true;
-        }
-        else if(!player->colidiu && player->y <= (boxes[SI].y + boxes[SI].height) &&(((player->x >= boxes[SI].x) && (player->x <= (boxes[SI].x+boxes[SI].width))) || ((player->x+player->width) >= boxes[SI].x) && ((player->x+player->width) <= (boxes[SI].x+boxes[SI].width))))//collision acima  player
-        {
-            player->y = boxes[SI].y + boxes[SI].height;
-            player->seqJogador[j] = SI;
-            j++;
-            player->colidiu = true;
-        }
-
-        else
+        (*timerColisao)++;
+        if((*timerColisao) > 30)
         {
             player->colidiu = false;
-            break;
+            (*timerColisao) = 0;
         }
-
     }
+
+    for(i=0; i<NUM_NOTES; i++)
+    {
+        if( player->y <= (boxes[i].y + boxes[i].height) && (((player->x >= boxes[i].x) && (player->x <= (boxes[i].x+boxes[i].width))) || ((player->x+player->width) >= boxes[i].x) && ((player->x+player->width) <= (boxes[i].x+boxes[i].width))))//collision acima do player
+        {
+            player->y = boxes[i].y + boxes[i].height;
+            if (*timerColisao==0)
+            {
+                player->seqJogador[*j] = i;
+                (*j)++;
+                player->colidiu = true;
+            }
+        }
+    }
+
+    /*/ COLIDIR COM AS LATERAIS DAS CAIXAS
+    if(player->y <= (boxes[DO].y + boxes[DO].height) && (player->x+player->width) >= boxes[DO].x  && (player->x+player->width) < (boxes[DO].x+boxes[DO].width))
+    {
+       player->x = boxes[DO].x - player->width;
+    }
+    /*/
 }
 
+void CheckSequencias(struct PLAYER *player, int seqCerta[], int *j, int *state)
+{
+    int i;
+    for(i=0; i<NUM_BIRDS; i++)
+    {
+        if(seqCerta[i] == player->seqJogador[i])
+        {
+            //o que faz quando acerta uma nota
+        }
+        else if(player->seqJogador[i] < 24)
+        {
+            (*j) = 0;
+            player->seqJogador[i] = 24;
+            player->lives--;
+            break;
+        }
+    }
+
+    if(*j == NUM_BIRDS)
+        (*state) = YOUWIN;
+
+    if(player->lives <= 0)
+        (*state) = GAMEOVER;
+}
 
 void InitBoxes(struct BOXES boxes[])
 {

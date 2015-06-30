@@ -23,6 +23,7 @@
 
 enum IDS {PLAYER, BIRDS, BOXES};
 enum notes {DO, RE, MI, FA, SOL, LA, SI};
+enum state_tag {MENU, PLAYING, GAMEOVER, YOUWIN};
 
 //enum posNotes{};
 

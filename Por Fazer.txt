@@ -1,0 +1,5 @@
+//fazer colisao com lateral da caixa
+//melhorar a colisao usando o sprite do player
+//botar mais possiveis posiçoes de notas e associar com as caixas
+//parte grafica
+//botar sons
