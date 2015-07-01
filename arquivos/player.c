@@ -11,7 +11,7 @@ void InitPlayer(struct PLAYER *player)
     player->y = player->pos_inicial_y;
     player->dy = 0;
     player->move_speed = 5;
-    player->jump_speed = 12;    //mudar a altura do pulo
+    player->jump_speed = 10;    //mudar a altura do pulo
 
     player->colidiu = false;
     player->is_on_solid_ground = true;
@@ -19,6 +19,13 @@ void InitPlayer(struct PLAYER *player)
     for(i=0; i<NUM_BIRDS; i++)
         player->seqJogador[i] = 24;
     player->lives = 3;  // numero de vidas
+
+    player->frame_count = 0;
+    player->frame_delay = 10; //definir a velocidade das frames
+    player->frame_act = STAND;//STAND = 0, WALK = 1, JUMP = 2
+    player->frame_dir = RIGHT;//RIGHT = 0,  LEFT = 1
+    player->frame_cur = 0;
+
 }
 
 void MovePlayerRight(struct PLAYER *player)
@@ -76,5 +83,5 @@ void PlayerJump(struct PLAYER *player, int key)
 
 void DrawPlayer(struct PLAYER *player)
 {
-    al_draw_filled_rectangle(player->x, player->y, player->x + player->width, player->y + player->height, al_map_rgb(0,139,69));
+    al_draw_bitmap(player->sprite[player->frame_act][player->frame_dir][player->frame_cur], player->x, player->y, 0);
 }

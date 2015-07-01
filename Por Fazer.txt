@@ -1,5 +1,14 @@
-//fazer colisao com lateral da caixa
-//melhorar a colisao usando o sprite do player
-//botar mais possiveis posiçoes de notas e associar com as caixas
-//parte grafica
-//botar sons
+
+*//fazer caixa subir quando colidir
+*//mudar estilo menus
+*//tela de instruções
+*//animações: "contexto" antes do jogo
+*//animação quando vence
+*//animação quando perde
+
+//esquema de pontuação
+//mostrar as vidas
+
+som:
+//quando jogador bate na caixa, toca a nota correspondente
+//quanto toca a caixa errada, faz som de errado

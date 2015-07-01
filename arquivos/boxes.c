@@ -80,6 +80,6 @@ void DrawBoxes(struct BOXES boxes[])
     int i;
     for(i = 0; i < NUM_BOXES; i++)
     {
-        al_draw_filled_rectangle(boxes[i].x,boxes[i].y, boxes[i].x + boxes[i].width, boxes[i].y + boxes[i].height, al_map_rgb(120,120,120));
+        al_draw_bitmap(boxes[i].sprite, boxes[i].x, boxes[i].y, 0);
     }
 }

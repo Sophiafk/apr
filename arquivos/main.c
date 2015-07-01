@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     enum key_tag {KEY_UP, KEY_LEFT, KEY_RIGHT, KEY_LSHIFT, KEY_SPACE, KEY_ENTER, KEY_Y, KEY_N, KEY_ESC, teclasTotal};
 
     srand(time(NULL));
-    int i;
+    int i,j,k;
     bool redraw = true;
     bool quit = false;
     bool key[teclasTotal];
@@ -49,6 +49,11 @@ int main(int argc, char **argv)
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_FONT *font_24, *font_48, *font_124;
+    ALLEGRO_BITMAP *background;
+    ALLEGRO_BITMAP *foreground;
+    ALLEGRO_SAMPLE *bgsound = NULL;
+    ALLEGRO_SAMPLE_INSTANCE *bgsoundInstance= NULL;
+
 
 ///////////////////////////////INICIALIZA ALLEGRO///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //INICIALIZAÇÕES
@@ -78,6 +83,40 @@ int main(int argc, char **argv)
         al_destroy_timer(timer);
         return -1;
     }
+
+    if(!al_install_audio())
+    {
+        fprintf(stderr, "failed to initialize audio!\n");
+        return -1;
+    }
+
+     if(!al_init_acodec_addon())
+    {
+        fprintf(stderr, "failed to initialize audio!\n");
+        return -1;
+    }
+
+    if(!al_reserve_samples(1))
+    {
+        fprintf(stderr, "failed to reserve sample!\n");
+        return -1;
+    }
+
+    bgsound = al_load_sample("sounds/nyan.wav");
+
+    if(!bgsound)
+    {
+        fprintf(stderr, "failed to load sound!\n");
+        al_destroy_display(display);
+        al_destroy_sample(bgsound);
+        return -1;
+    }
+
+
+    bgsoundInstance = al_create_sample_instance(bgsound);
+    al_set_sample_instance_playmode(bgsoundInstance, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_sample_instance_to_mixer(bgsoundInstance, al_get_default_mixer());
+
     al_install_keyboard();
     al_init_image_addon();
     al_init_primitives_addon();
@@ -85,13 +124,79 @@ int main(int argc, char **argv)
     al_init_ttf_addon();
 
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //CARREGAR
     font_24 = al_load_font("casale.ttf", 24, 0);
     font_48 = al_load_font("casale.ttf", 48, 0);
     font_124 = al_load_font("casale.ttf", 124, 0);
+
+    //SPRITE
+    background = al_load_bitmap("sprites/background.png");
+    foreground = al_load_bitmap("sprites/foreground.png");
+
+    caixas[DO].sprite = al_load_bitmap("sprites/DO.png");
+    caixas[RE].sprite = al_load_bitmap("sprites/RE.png");
+    caixas[MI].sprite = al_load_bitmap("sprites/MI.png");
+    caixas[FA].sprite = al_load_bitmap("sprites/FA.png");
+    caixas[SOL].sprite = al_load_bitmap("sprites/SOL.png");
+    caixas[LA].sprite = al_load_bitmap("sprites/LA.png");
+    caixas[SI].sprite = al_load_bitmap("sprites/SI.png");
+
+    //STAND, RIGHT
+    jogador.sprite[0][0][0] = al_load_bitmap("sprites/[0][0][0].png");
+    jogador.sprite[0][0][1] = al_load_bitmap("sprites/[0][0][1].png");
+    jogador.sprite[0][0][2] = al_load_bitmap("sprites/[0][0][2].png");
+    jogador.sprite[0][0][3] = al_load_bitmap("sprites/[0][0][3].png");
+    jogador.sprite[0][0][4] = al_load_bitmap("sprites/[0][0][4].png");
+    jogador.sprite[0][0][5] = al_load_bitmap("sprites/[0][0][5].png");
+    jogador.sprite[0][0][6] = al_load_bitmap("sprites/[0][0][6].png");
+    jogador.sprite[0][0][7] = al_load_bitmap("sprites/[0][0][7].png");
+    //STAND, LEFT
+    jogador.sprite[0][1][0] = al_load_bitmap("sprites/[0][1][0].png");
+    jogador.sprite[0][1][1] = al_load_bitmap("sprites/[0][1][1].png");
+    jogador.sprite[0][1][2] = al_load_bitmap("sprites/[0][1][2].png");
+    jogador.sprite[0][1][3] = al_load_bitmap("sprites/[0][1][3].png");
+    jogador.sprite[0][1][4] = al_load_bitmap("sprites/[0][1][4].png");
+    jogador.sprite[0][1][5] = al_load_bitmap("sprites/[0][1][5].png");
+    jogador.sprite[0][1][6] = al_load_bitmap("sprites/[0][1][6].png");
+    jogador.sprite[0][1][7] = al_load_bitmap("sprites/[0][1][7].png");
+    //WALK, RIGHT
+    jogador.sprite[1][0][0] = al_load_bitmap("sprites/[1][0][0].png");
+    jogador.sprite[1][0][1] = al_load_bitmap("sprites/[1][0][1].png");
+    jogador.sprite[1][0][2] = al_load_bitmap("sprites/[1][0][2].png");
+    jogador.sprite[1][0][3] = al_load_bitmap("sprites/[1][0][3].png");
+    jogador.sprite[1][0][4] = al_load_bitmap("sprites/[1][0][4].png");
+    jogador.sprite[1][0][5] = al_load_bitmap("sprites/[1][0][5].png");
+    jogador.sprite[1][0][6] = al_load_bitmap("sprites/[1][0][6].png");
+    jogador.sprite[1][0][7] = al_load_bitmap("sprites/[1][0][7].png");
+    //WALK, LEFT
+    jogador.sprite[1][1][0] = al_load_bitmap("sprites/[1][1][0].png");
+    jogador.sprite[1][1][1] = al_load_bitmap("sprites/[1][1][1].png");
+    jogador.sprite[1][1][2] = al_load_bitmap("sprites/[1][1][2].png");
+    jogador.sprite[1][1][3] = al_load_bitmap("sprites/[1][1][3].png");
+    jogador.sprite[1][1][4] = al_load_bitmap("sprites/[1][1][4].png");
+    jogador.sprite[1][1][5] = al_load_bitmap("sprites/[1][1][5].png");
+    jogador.sprite[1][1][6] = al_load_bitmap("sprites/[1][1][6].png");
+    jogador.sprite[1][1][7] = al_load_bitmap("sprites/[1][1][7].png");
+    //JUMP, RIGHT
+    jogador.sprite[2][0][0] = al_load_bitmap("sprites/[2][0][0].png");
+    jogador.sprite[2][0][1] = al_load_bitmap("sprites/[2][0][1].png");
+    jogador.sprite[2][0][2] = al_load_bitmap("sprites/[2][0][2].png");
+    jogador.sprite[2][0][3] = al_load_bitmap("sprites/[2][0][3].png");
+    jogador.sprite[2][0][4] = al_load_bitmap("sprites/[2][0][4].png");
+    jogador.sprite[2][0][5] = al_load_bitmap("sprites/[2][0][5].png");
+    jogador.sprite[2][0][6] = al_load_bitmap("sprites/[2][0][6].png");
+    jogador.sprite[2][0][7] = al_load_bitmap("sprites/[2][0][7].png");
+    //JUMP, LEFT
+    jogador.sprite[2][1][0] = al_load_bitmap("sprites/[2][1][0].png");
+    jogador.sprite[2][1][1] = al_load_bitmap("sprites/[2][1][1].png");
+    jogador.sprite[2][1][2] = al_load_bitmap("sprites/[2][1][2].png");
+    jogador.sprite[2][1][3] = al_load_bitmap("sprites/[2][1][3].png");
+    jogador.sprite[2][1][4] = al_load_bitmap("sprites/[2][1][4].png");
+    jogador.sprite[2][1][5] = al_load_bitmap("sprites/[2][1][5].png");
+    jogador.sprite[2][1][6] = al_load_bitmap("sprites/[2][1][6].png");
+    jogador.sprite[2][1][7] = al_load_bitmap("sprites/[2][1][7].png");
+
     //LISTA DOS POSSIVEIS EVENTOS
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -187,6 +292,8 @@ int main(int argc, char **argv)
             switch(state)
             {
             case MENU:
+
+                al_play_sample_instance(bgsoundInstance);
                 InitPlayer(&jogador);
                 InitBoxes(caixas);
                 InitBirds(passaros, seqCerta);
@@ -212,13 +319,7 @@ int main(int argc, char **argv)
                 PlayerJump(&jogador, key[KEY_UP]);
                 CheckCollision(&jogador, caixas, &numColisoes, &timerColisao);
                 CheckSequencias(&jogador, seqCerta, &numColisoes, &state);
-
-                /*/ IMPRIMIR A SEQUENCIA CERTA
-                for(i=0; i<NUM_BIRDS; i++)
-                {
-                    printf("%d\nseqCerta: %d - seqJogador: %d\n", i, seqCerta[i], jogador.seqJogador[i]);
-                }
-                /*/
+                //break; //??????????????????? tinha na versao da sophia que nao funcionava
 
             case GAMEOVER:
                 if(key[KEY_SPACE])
@@ -251,7 +352,7 @@ int main(int argc, char **argv)
             redraw = false;
 
             //CORES
-            ALLEGRO_COLOR color_bg = al_map_rgb(113, 113, 198);
+            ALLEGRO_COLOR color_bg = al_map_rgb(119, 220, 217);
             ALLEGRO_COLOR color_green = al_map_rgb(0, 139, 69);
             ALLEGRO_COLOR color_white = al_map_rgb(255, 255, 255);
             ALLEGRO_COLOR color_black = al_map_rgb(0, 0, 0);
@@ -268,14 +369,14 @@ int main(int argc, char **argv)
 
             case PLAYING:
                 al_clear_to_color(color_bg);
-                al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);
-                al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);
-                al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu);
+                //DEBUG//al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu); //
+                al_draw_bitmap(background, 0, 0, 0);
                 DrawPentagram();
                 al_draw_filled_rectangle(SCREEN_W/SCREEN_W , SCREEN_H/1.25, SCREEN_W, SCREEN_H, al_map_rgb(50,125,0));
                 DrawBirds(passaros);
                 DrawPlayer(&jogador);
                 DrawBoxes(caixas);
+                al_draw_bitmap(foreground, 0, 0, 0);
                 al_flip_display();
                 break;
 
@@ -299,10 +400,34 @@ int main(int argc, char **argv)
     }//while
 
 ///////////////////////////////DESTROI AS COISAS////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*/
+    for(i = 0; i < SPRITE_ACT; i++)
+    {
+        for(j = 0; j < SPRITE_DIR; j++)
+        {
+            for(k = 0; k < SPRITE_CUR; k++)
+            {
+                al_destroy_bitmap(jogador.sprite[i][j][k]);
+            }
+        }
+    }
+    /*/
+    for(i=0; i <NUM_BIRDS; i++)
+    {
+        al_destroy_bitmap(caixas[i].sprite);
+    }
+
+    al_destroy_bitmap(background);
+    al_destroy_bitmap(foreground);
+
+
     al_destroy_font(font_24);
     al_destroy_font(font_48);
     al_destroy_font(font_124);
     al_destroy_timer(timer);
+    al_destroy_sample(bgsound);
+    al_destroy_sample_instance(bgsoundInstance);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
 
