@@ -1,3 +1,4 @@
+//COM RELAÇÃO AO APR - 7:
 /**********************   MAIN  ******************************/
 /*/
 int j,k;
@@ -26,5 +27,31 @@ alterar a altura do pulo para 10
 
 /*/
 
+
+//COM RELAÇÃO AO APR - 8:
+/**********************   MAIN  ******************************/
+/*/
+botei animação quando STAND
+mudei ordem de desenho player e foreground
+deletei o quadrado verde que era o chao antes
+
+testa se parado, direita, esquerda, ou pulando
+anima ((ver frames do pulo && botar sprites para a esquerda))
+/*/
+
+/**********************   BOXES  ******************************/
+/*/
+
+/*/
+
+/**********************   OBJECTS  ******************************/
+/*/
+
+/*/
+
+/**********************   PLAYER  ******************************/
+/*/
+mudei pos inicial y do player
+/*/
 
 

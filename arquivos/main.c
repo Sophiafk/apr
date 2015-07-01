@@ -6,9 +6,11 @@ void DrawPlayer(struct PLAYER *player);
 void MovePlayerRight(struct PLAYER *player);
 void MovePlayerLeft(struct PLAYER *player);
 void PlayerJump(struct PLAYER *player, int key);
+void LoadSpritesPlayer(struct PLAYER *player);
 
 void DrawBoxes(struct BOXES boxes[]);
 void InitBoxes(struct BOXES boxes[]);
+void LoadSpritesBoxes(struct BOXES boxes[]);
 
 void InitBirds(struct BIRDS birds[], int sequencia[]);
 void DrawBirds(struct BIRDS birds[]);
@@ -51,6 +53,7 @@ int main(int argc, char **argv)
     ALLEGRO_FONT *font_24, *font_48, *font_124;
     ALLEGRO_BITMAP *background;
     ALLEGRO_BITMAP *foreground;
+    ALLEGRO_BITMAP *cleff;
     ALLEGRO_SAMPLE *bgsound = NULL;
     ALLEGRO_SAMPLE_INSTANCE *bgsoundInstance= NULL;
 
@@ -133,69 +136,13 @@ int main(int argc, char **argv)
     //SPRITE
     background = al_load_bitmap("sprites/background.png");
     foreground = al_load_bitmap("sprites/foreground.png");
-
-    caixas[DO].sprite = al_load_bitmap("sprites/DO.png");
-    caixas[RE].sprite = al_load_bitmap("sprites/RE.png");
-    caixas[MI].sprite = al_load_bitmap("sprites/MI.png");
-    caixas[FA].sprite = al_load_bitmap("sprites/FA.png");
-    caixas[SOL].sprite = al_load_bitmap("sprites/SOL.png");
-    caixas[LA].sprite = al_load_bitmap("sprites/LA.png");
-    caixas[SI].sprite = al_load_bitmap("sprites/SI.png");
-
-    //STAND, RIGHT
-    jogador.sprite[0][0][0] = al_load_bitmap("sprites/[0][0][0].png");
-    jogador.sprite[0][0][1] = al_load_bitmap("sprites/[0][0][1].png");
-    jogador.sprite[0][0][2] = al_load_bitmap("sprites/[0][0][2].png");
-    jogador.sprite[0][0][3] = al_load_bitmap("sprites/[0][0][3].png");
-    jogador.sprite[0][0][4] = al_load_bitmap("sprites/[0][0][4].png");
-    jogador.sprite[0][0][5] = al_load_bitmap("sprites/[0][0][5].png");
-    jogador.sprite[0][0][6] = al_load_bitmap("sprites/[0][0][6].png");
-    jogador.sprite[0][0][7] = al_load_bitmap("sprites/[0][0][7].png");
-    //STAND, LEFT
-    jogador.sprite[0][1][0] = al_load_bitmap("sprites/[0][1][0].png");
-    jogador.sprite[0][1][1] = al_load_bitmap("sprites/[0][1][1].png");
-    jogador.sprite[0][1][2] = al_load_bitmap("sprites/[0][1][2].png");
-    jogador.sprite[0][1][3] = al_load_bitmap("sprites/[0][1][3].png");
-    jogador.sprite[0][1][4] = al_load_bitmap("sprites/[0][1][4].png");
-    jogador.sprite[0][1][5] = al_load_bitmap("sprites/[0][1][5].png");
-    jogador.sprite[0][1][6] = al_load_bitmap("sprites/[0][1][6].png");
-    jogador.sprite[0][1][7] = al_load_bitmap("sprites/[0][1][7].png");
-    //WALK, RIGHT
-    jogador.sprite[1][0][0] = al_load_bitmap("sprites/[1][0][0].png");
-    jogador.sprite[1][0][1] = al_load_bitmap("sprites/[1][0][1].png");
-    jogador.sprite[1][0][2] = al_load_bitmap("sprites/[1][0][2].png");
-    jogador.sprite[1][0][3] = al_load_bitmap("sprites/[1][0][3].png");
-    jogador.sprite[1][0][4] = al_load_bitmap("sprites/[1][0][4].png");
-    jogador.sprite[1][0][5] = al_load_bitmap("sprites/[1][0][5].png");
-    jogador.sprite[1][0][6] = al_load_bitmap("sprites/[1][0][6].png");
-    jogador.sprite[1][0][7] = al_load_bitmap("sprites/[1][0][7].png");
-    //WALK, LEFT
-    jogador.sprite[1][1][0] = al_load_bitmap("sprites/[1][1][0].png");
-    jogador.sprite[1][1][1] = al_load_bitmap("sprites/[1][1][1].png");
-    jogador.sprite[1][1][2] = al_load_bitmap("sprites/[1][1][2].png");
-    jogador.sprite[1][1][3] = al_load_bitmap("sprites/[1][1][3].png");
-    jogador.sprite[1][1][4] = al_load_bitmap("sprites/[1][1][4].png");
-    jogador.sprite[1][1][5] = al_load_bitmap("sprites/[1][1][5].png");
-    jogador.sprite[1][1][6] = al_load_bitmap("sprites/[1][1][6].png");
-    jogador.sprite[1][1][7] = al_load_bitmap("sprites/[1][1][7].png");
-    //JUMP, RIGHT
-    jogador.sprite[2][0][0] = al_load_bitmap("sprites/[2][0][0].png");
-    jogador.sprite[2][0][1] = al_load_bitmap("sprites/[2][0][1].png");
-    jogador.sprite[2][0][2] = al_load_bitmap("sprites/[2][0][2].png");
-    jogador.sprite[2][0][3] = al_load_bitmap("sprites/[2][0][3].png");
-    jogador.sprite[2][0][4] = al_load_bitmap("sprites/[2][0][4].png");
-    jogador.sprite[2][0][5] = al_load_bitmap("sprites/[2][0][5].png");
-    jogador.sprite[2][0][6] = al_load_bitmap("sprites/[2][0][6].png");
-    jogador.sprite[2][0][7] = al_load_bitmap("sprites/[2][0][7].png");
-    //JUMP, LEFT
-    jogador.sprite[2][1][0] = al_load_bitmap("sprites/[2][1][0].png");
-    jogador.sprite[2][1][1] = al_load_bitmap("sprites/[2][1][1].png");
-    jogador.sprite[2][1][2] = al_load_bitmap("sprites/[2][1][2].png");
-    jogador.sprite[2][1][3] = al_load_bitmap("sprites/[2][1][3].png");
-    jogador.sprite[2][1][4] = al_load_bitmap("sprites/[2][1][4].png");
-    jogador.sprite[2][1][5] = al_load_bitmap("sprites/[2][1][5].png");
-    jogador.sprite[2][1][6] = al_load_bitmap("sprites/[2][1][6].png");
-    jogador.sprite[2][1][7] = al_load_bitmap("sprites/[2][1][7].png");
+    cleff = al_load_bitmap("sprites/cleff.png");
+    for(i=0; i<NUM_BIRDS; i++)
+    {
+        passaros[i].sprite = al_load_bitmap("sprites/bird0.png");
+    }
+    LoadSpritesBoxes(caixas);
+    LoadSpritesPlayer(&jogador);
 
     //LISTA DOS POSSIVEIS EVENTOS
     al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -313,13 +260,36 @@ int main(int argc, char **argv)
                     key[KEY_ENTER] = 0;
                 }
                 if(key[KEY_RIGHT])
+                {
                     MovePlayerRight(&jogador);
+                    jogador.frame_dir = RIGHT;
+                    jogador.frame_act = WALK;
+                }
                 if(key[KEY_LEFT])
+                {
                     MovePlayerLeft(&jogador);
+                    jogador.frame_dir = LEFT;
+                    jogador.frame_act = WALK;
+                }
+                else if(!key[KEY_RIGHT] && !key[KEY_LEFT] && !key[KEY_UP])
+                {
+                    jogador.frame_act = STAND;
+
+                }
                 PlayerJump(&jogador, key[KEY_UP]);
                 CheckCollision(&jogador, caixas, &numColisoes, &timerColisao);
                 CheckSequencias(&jogador, seqCerta, &numColisoes, &state);
-                //break; //??????????????????? tinha na versao da sophia que nao funcionava
+
+                jogador.frame_count++;
+                if(jogador.frame_count >= jogador.frame_delay)
+                {
+                    jogador.frame_cur++;
+                    if(jogador.frame_cur >= SPRITE_CUR)
+                    {
+                        jogador.frame_cur = 0;
+                    }
+                    jogador.frame_count = 0;
+                }
 
             case GAMEOVER:
                 if(key[KEY_SPACE])
@@ -361,7 +331,7 @@ int main(int argc, char **argv)
             {
             case MENU:
                 al_clear_to_color(color_bg);
-                al_draw_text(font_48, color_white, SCREEN_W/2, 150, ALLEGRO_ALIGN_CENTER, "BIG BIRD BOOM");
+                al_draw_text(font_48, color_white, SCREEN_W/2, 150, ALLEGRO_ALIGN_CENTER, "NOME");
                 al_draw_text(font_24, color_white, SCREEN_W/2, 300, ALLEGRO_ALIGN_CENTER, "> START GAME [PRESS SPACE]");
                 al_draw_text(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, "> QUIT [PRESS ESC]");
                 al_flip_display();
@@ -369,14 +339,14 @@ int main(int argc, char **argv)
 
             case PLAYING:
                 al_clear_to_color(color_bg);
-                //DEBUG//al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu); //
                 al_draw_bitmap(background, 0, 0, 0);
                 DrawPentagram();
-                al_draw_filled_rectangle(SCREEN_W/SCREEN_W , SCREEN_H/1.25, SCREEN_W, SCREEN_H, al_map_rgb(50,125,0));
+                al_draw_bitmap(cleff,100,90,0);
                 DrawBirds(passaros);
+                al_draw_bitmap(foreground, 0, 0, 0);
                 DrawPlayer(&jogador);
                 DrawBoxes(caixas);
-                al_draw_bitmap(foreground, 0, 0, 0);
+                //DEBUG//al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu); //
                 al_flip_display();
                 break;
 
@@ -401,7 +371,6 @@ int main(int argc, char **argv)
 
 ///////////////////////////////DESTROI AS COISAS////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*/
     for(i = 0; i < SPRITE_ACT; i++)
     {
         for(j = 0; j < SPRITE_DIR; j++)
@@ -412,16 +381,16 @@ int main(int argc, char **argv)
             }
         }
     }
-    /*/
-    for(i=0; i <NUM_BIRDS; i++)
+    for(i=0; i <NUM_BOXES; i++)
     {
         al_destroy_bitmap(caixas[i].sprite);
     }
-
+    for(i=0; i<NUM_BIRDS; i++)
+    {
+        al_destroy_bitmap(passaros[i].sprite);
+    }
     al_destroy_bitmap(background);
     al_destroy_bitmap(foreground);
-
-
     al_destroy_font(font_24);
     al_destroy_font(font_48);
     al_destroy_font(font_124);

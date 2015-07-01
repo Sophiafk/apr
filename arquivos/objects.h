@@ -20,7 +20,7 @@
 #define  gravity 0.5
 #define NUM_BOXES 7
 #define NUM_BIRDS 5
-#define NUM_NOTES 7
+#define NUM_NOTES 13
 #define NENHUMA 24
 
 #define SPRITE_ACT 3 //STAND, WALK, JUMP
@@ -48,7 +48,7 @@ struct PLAYER
     float jump_speed;
 
     int seqJogador[NUM_BIRDS];
-    int lives;
+    int lifes;
 
     float bx;
     float by;
@@ -63,6 +63,8 @@ struct PLAYER
     int frame_cur;
 
     ALLEGRO_BITMAP *sprite[SPRITE_ACT][SPRITE_DIR][SPRITE_CUR];
+    ALLEGRO_BITMAP *heart_full;
+    ALLEGRO_BITMAP *heart_empty;
 };
 
 struct BOXES
@@ -87,4 +89,6 @@ struct BIRDS
 
     int note;
     bool live;
+
+    ALLEGRO_BITMAP *sprite;
 };

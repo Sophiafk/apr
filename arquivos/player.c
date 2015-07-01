@@ -6,7 +6,7 @@ void InitPlayer(struct PLAYER *player)
     player->width = 60;
     player->height = 100;
     player->pos_inicial_x = 75;
-    player->pos_inicial_y = 535 - player->height;
+    player->pos_inicial_y = 540 - player->height;
     player->x = player->pos_inicial_x;
     player->y = player->pos_inicial_y;
     player->dy = 0;
@@ -18,7 +18,7 @@ void InitPlayer(struct PLAYER *player)
     player->may_jump = false;
     for(i=0; i<NUM_BIRDS; i++)
         player->seqJogador[i] = 24;
-    player->lives = 3;  // numero de vidas
+    player->lifes = 3;  // numero de vidas
 
     player->frame_count = 0;
     player->frame_delay = 10; //definir a velocidade das frames
@@ -55,6 +55,7 @@ void PlayerJump(struct PLAYER *player, int key)
         {
             if(player->may_jump)
             {
+                player->frame_act = JUMP;
                 player->dy -= player->jump_speed;
                 player->may_jump = false;
             }
@@ -66,6 +67,7 @@ void PlayerJump(struct PLAYER *player, int key)
     }
     if(!player->is_on_solid_ground)
     {
+        player->frame_act = JUMP;
         player->dy += gravity; //começa a descer com a gravidade
     }
     if(player->dy > player->jump_speed)
@@ -81,7 +83,55 @@ void PlayerJump(struct PLAYER *player, int key)
     }
 }
 
-void DrawPlayer(struct PLAYER *player)
+void CheckCollision(struct PLAYER *player, struct BOXES boxes[], int *j, int *timerColisao)
 {
-    al_draw_bitmap(player->sprite[player->frame_act][player->frame_dir][player->frame_cur], player->x, player->y, 0);
+    int i;
+    if(player->colidiu == true)
+    {
+        (*timerColisao)++;
+        if((*timerColisao) > 30)
+        {
+            player->colidiu = false;
+            (*timerColisao) = 0;
+        }
+    }
+
+    for(i=0; i<NUM_BOXES; i++)
+    {
+        if( player->y <= (boxes[i].y + boxes[i].height) && (((player->x >= boxes[i].x) && (player->x <= (boxes[i].x+boxes[i].width))) || ((player->x+player->width) >= boxes[i].x) && ((player->x+player->width) <= (boxes[i].x+boxes[i].width))))//collision acima do player
+        {
+            player->y = boxes[i].y + boxes[i].height;
+            if (*timerColisao==0)
+            {
+                player->seqJogador[*j] = i;
+                (*j)++;
+                player->colidiu = true;
+            }
+        }
+    }
+}
+
+void CheckSequencias(struct PLAYER *player, int seqCerta[], int *j, int *state)
+{
+    int i;
+    for(i=0; i<NUM_BIRDS; i++)
+    {
+        if(seqCerta[i] == player->seqJogador[i])
+        {
+            //o que faz quando acerta uma nota
+        }
+        else if(player->seqJogador[i] < 24)
+        {
+            (*j) = 0;
+            player->seqJogador[i] = 24;
+            player->lifes--;
+            break;
+        }
+    }
+
+    if(*j == NUM_BIRDS)
+        (*state) = YOUWIN;
+
+    if(player->lifes <= 0)
+        (*state) = GAMEOVER;
 }
