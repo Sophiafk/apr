@@ -1,8 +1,7 @@
-/*PORQUE TEM ISSO??
-    #ifndef OBJECTS_H_INCLUDED
-    #define OBJECTS_H_INCLUDED
-    #endif // OBJECTS_H_INCLUDED
-*/
+#ifndef OBJECTS_H_INCLUDED
+#define OBJECTS_H_INCLUDED
+
+//BIBLIOTECAS
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -14,6 +13,7 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
+//CONSTANTES
 #define SCREEN_W 1000
 #define SCREEN_H 600
 #define  FPS 60
@@ -29,14 +29,14 @@
 
 enum IDS {PLAYER, BIRDS, BOXES};
 enum notes {DO, RE, MI, FA, SOL, LA, SI};
-enum state_tag {MENU, PLAYING, GAMEOVER, YOUWIN};
+enum state_tag {MENU, PLAYING, GAMEOVER, YOUWIN/*/deletar o youwin/*/, /*/INTRO/*/};
 enum action {STAND, WALK, JUMP};
 enum direction {RIGHT, LEFT};
 
-//enum posNotes{};
-
+//ESTRUTURAS
 struct PLAYER
 {
+    //posição
     int width;
     int height;
     float pos_inicial_x;
@@ -46,22 +46,20 @@ struct PLAYER
     float dy;
     float move_speed;
     float jump_speed;
-
+    //vidas
     int seqJogador[NUM_BIRDS];
     int lifes;
-
-    float bx;
-    float by;
+    //colisão
     bool colidiu;
     bool is_on_solid_ground;
     bool may_jump;
-
+    //animação
     int frame_count;
     int frame_delay;
-    int frame_act;//STAND = 0, WALK = 1, JUMP = 2
-    int frame_dir;//RIGHT = 0,  LEFT = 1
+    int frame_act; //STAND = 0, WALK = 1, JUMP = 2
+    int frame_dir; //RIGHT = 0,  LEFT = 1
     int frame_cur;
-
+    //variaveis allegro
     ALLEGRO_BITMAP *sprite[SPRITE_ACT][SPRITE_DIR][SPRITE_CUR];
     ALLEGRO_BITMAP *heart_full;
     ALLEGRO_BITMAP *heart_empty;
@@ -69,26 +67,26 @@ struct PLAYER
 
 struct BOXES
 {
+    //posição
     int width;
     int height;
     float x;
     float y;
-    float bx;
-    float by;
-
-    int note;
-
+    //variaveis allegro
     ALLEGRO_BITMAP *sprite;
 };
 
 struct BIRDS
 {
+    //posição
     float x;
     float y;
     float raio;
-
+    //colisão
     int note;
     bool live;
-
+    //variaves allegro
     ALLEGRO_BITMAP *sprite;
 };
+
+#endif // OBJECTS_H_INCLUDED

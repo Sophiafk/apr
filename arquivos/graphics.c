@@ -1,14 +1,6 @@
 #include "objects.h"
 
-void DrawPentagram()
-{
-    int i;
-    for(i = 0; i < 5; i++)
-    {
-        al_draw_line(0,((SCREEN_H/6)+(SCREEN_H/30)*i),SCREEN_W,((SCREEN_H/6)+(SCREEN_H/30)*i),al_map_rgb(0,0,0),2);
-    }
-}
-
+//CARREGAR SPRITES
 void LoadSpritesPlayer(struct PLAYER *player)
 {
     //STAND, RIGHT
@@ -78,10 +70,19 @@ void LoadSpritesBoxes(struct BOXES boxes[])
     boxes[SI].sprite = al_load_bitmap("sprites/SI.png");
 }
 
+//DESENHAR
+void DrawPentagram()
+{
+    int i;
+    for(i = 0; i < 5; i++)
+    {
+        al_draw_line(0,((SCREEN_H/6)+(SCREEN_H/30)*i),SCREEN_W,((SCREEN_H/6)+(SCREEN_H/30)*i),al_map_rgb(0,0,0),2);
+    }
+}
+
 void DrawBirds(struct BIRDS birds[])
  {
     int i;
-
     for(i = 0; i < NUM_BIRDS; i++)
     {
         if(birds[i].live)
