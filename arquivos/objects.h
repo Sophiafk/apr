@@ -19,7 +19,7 @@
 #define  FPS 60
 #define  gravity 0.5
 #define NUM_BOXES 7
-#define NUM_BIRDS 5
+#define NUM_BIRDS 6
 #define NUM_NOTES 13
 #define NENHUMA 24
 
@@ -29,7 +29,7 @@
 
 enum IDS {PLAYER, BIRDS, BOXES};
 enum notes {DO, RE, MI, FA, SOL, LA, SI};
-enum state_tag {MENU, PLAYING, GAMEOVER, YOUWIN/*/deletar o youwin/*/, /*/INTRO/*/};
+enum state_tag {MENU, PLAYING, GAMEOVER, CONFIG, INSTR, YOUWIN};
 enum action {STAND, WALK, JUMP};
 enum direction {RIGHT, LEFT};
 
@@ -53,6 +53,7 @@ struct PLAYER
     bool colidiu;
     bool is_on_solid_ground;
     bool may_jump;
+    int notaAtual;
     //animação
     int frame_count;
     int frame_delay;
@@ -61,8 +62,7 @@ struct PLAYER
     int frame_cur;
     //variaveis allegro
     ALLEGRO_BITMAP *sprite[SPRITE_ACT][SPRITE_DIR][SPRITE_CUR];
-    ALLEGRO_BITMAP *heart_full;
-    ALLEGRO_BITMAP *heart_empty;
+    ALLEGRO_BITMAP *heart_full, *heart_empty;
 };
 
 struct BOXES
@@ -72,6 +72,9 @@ struct BOXES
     int height;
     float x;
     float y;
+    float dy;
+    int note;
+    bool subir;
     //variaveis allegro
     ALLEGRO_BITMAP *sprite;
 };
@@ -86,7 +89,8 @@ struct BIRDS
     int note;
     bool live;
     //variaves allegro
-    ALLEGRO_BITMAP *sprite;
+    ALLEGRO_BITMAP *sprite0, *sprite1;
+
 };
 
 #endif // OBJECTS_H_INCLUDED

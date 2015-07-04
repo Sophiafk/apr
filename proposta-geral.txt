@@ -1,3 +1,8 @@
 #PROPOSTA GERAL
 
-Promover a inicialização musical através da leitura de partituras e identificação das notas, além de estimular a percepção musical daqueles que ja possuem conhecimento do assunto.
+Desenvolvimento de um Jogo Educativo em Linguagem de programação C utilizando a biblioteca Allegro.
+
+O jogo foi desenvolvido com o objetivo de promover a inicialização musical 
+através da leitura de partituras e identificação das notas, 
+além de estimular a percepção musical daqueles que ja possuem conhecimento 
+do assunto.

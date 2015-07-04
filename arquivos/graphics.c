@@ -3,6 +3,8 @@
 //CARREGAR SPRITES
 void LoadSpritesPlayer(struct PLAYER *player)
 {
+    player->heart_full = al_load_bitmap("sprites/heart1.png");
+    player->heart_empty = al_load_bitmap("sprites/heart0.png");
     //STAND, RIGHT
     player->sprite[0][0][0] = al_load_bitmap("sprites/[0][0][0].png");
     player->sprite[0][0][1] = al_load_bitmap("sprites/[0][0][1].png");
@@ -82,25 +84,36 @@ void DrawPentagram()
 
 void DrawBirds(struct BIRDS birds[])
  {
-    int i;
+    int i,m;
     for(i = 0; i < NUM_BIRDS; i++)
     {
-        if(birds[i].live)
+        if (birds[i].live == false)
         {
-            al_draw_bitmap(birds[i].sprite, birds[i].x, birds[i].y-10, 0);
+                al_draw_bitmap(birds[i].sprite0, birds[i].x, birds[i].y-10, 0);
         }
-        else
-            al_draw_filled_circle(birds[i].x, birds[i].y, birds[i].raio, al_map_rgb(255,255,255));
+        else if(birds[i].live == true)
+        {
+            al_draw_bitmap(birds[i].sprite1, birds[i].x, birds[i].y-10, 0);
 
+        }
     }
 }
 
-void DrawBoxes(struct BOXES boxes[])
+void DrawBoxes(struct BOXES boxes[], struct PLAYER *player)
 {
-    int i;
+    int i=0;
+
     for(i = 0; i < NUM_BOXES; i++)
     {
-        al_draw_bitmap(boxes[i].sprite, boxes[i].x, boxes[i].y, 0);
+        if(boxes[i].subir == true)
+        {
+            al_draw_bitmap(boxes[i].sprite, boxes[i].x, boxes[i].dy, 0);
+        }
+
+        if(boxes[i].subir == false)
+        {
+            al_draw_bitmap(boxes[i].sprite, boxes[i].x, boxes[i].dy, 0);
+        }
     }
 }
 

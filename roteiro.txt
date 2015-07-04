@@ -1,8 +1,15 @@
 #ROTEIRO
 
-Uma banda está tentando ensaiar, mas não consegue pois um grupo de passarinhos está fazendo muito barulho. 
-Ajude o vocalista da banda [NOME] a acabar com eles para que a banda possa continuar com o ensaio. 
+Scott's band is trying to play for some change.
+But a very annoying group of birds keep singing right where they were playing.
+Jump on the boxes in the same order as the bird's positions and help Scott to shut 'em up!
 
-O player é controlado pelas setas do teclado.
-Seu objetivo é acertar as caixas com as notas correspondentes às posições dos passarinhos que estão no fio, 
-seguindo a sequência correta. 
+Player is controlled with up, right and left arrows.
+
+//============================================================================================
+
+A banda de Scott está tentando tocar por umas gorjetas.
+Mas um grupo de passarinhos muito irritante resolve cantar justo onde eles estão tocando.
+Pule nas caixas seguindo sequência das notas que os pássaros formam e ajude Scott a calar os pássaros! (ou dar um fim na cantoria!)
+
+O jogador é controlado pelas setas do teclado.
