@@ -442,11 +442,11 @@ int main(int argc, char **argv)
                 al_draw_bitmap(background, 0, 0, 0);
                 DrawPentagram();
                 al_draw_bitmap(foreground, 0, 0, 0);
-                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTER, "SHUT THE BIRDS UP!");
-                al_draw_text(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, "START GAME [PRESS SPACE]");
-                al_draw_text(font_24, color_white, SCREEN_W/2, 400, ALLEGRO_ALIGN_CENTER, "INSTRUCTIONS [PRESS ENTER]");
-                al_draw_text(font_24, color_white, SCREEN_W/2, 450, ALLEGRO_ALIGN_CENTER, "QUIT [PRESS ESC]");
-                al_draw_text(font_12, color_white, SCREEN_W/2, 180, ALLEGRO_ALIGN_CENTER, "DEVELOPED BY S2");
+                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTRE, "SHUT THE BIRDS UP!");
+                al_draw_text(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTRE, "START GAME [PRESS SPACE]");
+                al_draw_text(font_24, color_white, SCREEN_W/2, 400, ALLEGRO_ALIGN_CENTRE, "INSTRUCTIONS [PRESS ENTER]");
+                al_draw_text(font_24, color_white, SCREEN_W/2, 450, ALLEGRO_ALIGN_CENTRE, "QUIT [PRESS ESC]");
+                al_draw_text(font_12, color_white, SCREEN_W/2, 180, ALLEGRO_ALIGN_CENTRE, "DEVELOPED BY S2");
                 al_flip_display();
                 break;
 
@@ -458,7 +458,7 @@ int main(int argc, char **argv)
                 DrawBirds(passaros);
                 al_draw_bitmap(banda, SCREEN_W*2/5, SCREEN_H/2+45, 0);
                 al_draw_filled_rounded_rectangle(70,548, 260, 585, 5, 5, color_grey);
-                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTER, "> BACK [ENTER]");
+                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTRE, "> BACK [ENTER]");
                 //ESCREVER INSTRUÇÕES
                 al_draw_textf(font_12, color_white, 80, 360, ALLEGRO_ALIGN_LEFT, "Scott's band is trying to play for some change.");
                 al_draw_textf(font_12, color_white, 80, 380, ALLEGRO_ALIGN_LEFT, "But a very annoying group of birds keep singing");
@@ -490,18 +490,18 @@ int main(int argc, char **argv)
                     }
 
                 }
-                al_draw_textf(font_24, color_white, SCREEN_W/2, 20, ALLEGRO_ALIGN_CENTER, "YOU: %d   BIRDS: %d", score, scoreBirds);
-                al_draw_textf(font_24, color_white, SCREEN_W/10, 20, ALLEGRO_ALIGN_CENTER, "MUTE[M]");
+                al_draw_textf(font_24, color_white, SCREEN_W/2, 20, ALLEGRO_ALIGN_CENTRE, "YOU: %d   BIRDS: %d", score, scoreBirds);
+                al_draw_textf(font_24, color_white, SCREEN_W/10, 20, ALLEGRO_ALIGN_CENTRE, "MUTE[M]");
                 al_draw_filled_rounded_rectangle(70,548, 260, 585, 5, 5, color_grey);
-                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTER, "> BACK [SPACE]");
+                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTRE, "> BACK [SPACE]");
                 al_draw_filled_rounded_rectangle(SCREEN_W/3-10, 548, 930, 585, 5, 5, color_grey);
                 al_draw_text(font_24, color_white, SCREEN_W/3, 550, ALLEGRO_ALIGN_LEFT, "   C=DO   D=RE   E=MI   F=FA   G=SOL   A=LA   B=SI  ");
 
                 /*/DEBUG:
-                al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTER, "timerColisao: %d", timerColisao);
-                al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTER, "contg: %d", numColisoes);
-                al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTER, "player colidiu: %d", jogador.colidiu);
-                //al_draw_textf(font_24, color_white, 100, 350, ALLEGRO_ALIGN_CENTER, "timerNotas: %d", timerNotas);
+                al_draw_textf(font_24, color_white, 100, 150, ALLEGRO_ALIGN_CENTRE, "timerColisao: %d", timerColisao);
+                al_draw_textf(font_24, color_white, 100, 200, ALLEGRO_ALIGN_CENTRE, "contg: %d", numColisoes);
+                al_draw_textf(font_24, color_white, 100, 250, ALLEGRO_ALIGN_CENTRE, "player colidiu: %d", jogador.colidiu);
+                //al_draw_textf(font_24, color_white, 100, 350, ALLEGRO_ALIGN_CENTRE, "timerNotas: %d", timerNotas);
                 /*/
                 al_flip_display();
                 break;
@@ -512,11 +512,11 @@ int main(int argc, char **argv)
                 DrawPentagram();
                 DrawBirds(passaros);
                 al_draw_bitmap(foreground, 0, 0, 0);
-                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTER, "YOU LOSE!");
-                al_draw_text(font_24, color_white, SCREEN_W/6, 500, ALLEGRO_ALIGN_CENTER, "> TRY AGAIN [SPACE]");
+                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTRE, "YOU LOSE!");
+                al_draw_text(font_24, color_white, SCREEN_W/6, 500, ALLEGRO_ALIGN_CENTRE, "> TRY AGAIN [SPACE]");
                 al_draw_filled_rounded_rectangle(70,548, 260, 585, 5, 5, color_grey);
-                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTER, "> MENU [ENTER]");
-                al_draw_textf(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, " BIRDS %d x %d YOU", scoreBirds, score);
+                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTRE, "> MENU [ENTER]");
+                al_draw_textf(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTRE, " BIRDS %d x %d YOU", scoreBirds, score);
                 al_flip_display();
                 break;
 
@@ -527,10 +527,10 @@ int main(int argc, char **argv)
                 al_draw_bitmap(cleff,100,90,0);
                 al_draw_bitmap(foreground, 0, 0, 0);
                 al_draw_bitmap(banda, SCREEN_W*2/5, SCREEN_H/2+45, 0);
-                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTER, "YOU WIN!");
+                al_draw_text(font_48, color_white, SCREEN_W/2, 100, ALLEGRO_ALIGN_CENTRE, "YOU WIN!");
                 al_draw_filled_rounded_rectangle(30,548, 300, 585, 5, 5, color_grey);
-                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTER, "> PLAY AGAIN [SPACE]");
-                al_draw_textf(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTER, " BIRDS %d x %d YOU", scoreBirds, score);
+                al_draw_text(font_24, color_white, SCREEN_W/6, 550, ALLEGRO_ALIGN_CENTRE, "> PLAY AGAIN [SPACE]");
+                al_draw_textf(font_24, color_white, SCREEN_W/2, 350, ALLEGRO_ALIGN_CENTRE, " BIRDS %d x %d YOU", scoreBirds, score);
                 al_flip_display();
                 break;
             }//switch(state)
